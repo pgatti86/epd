@@ -4,7 +4,22 @@ Porting of [Waveshare](https://github.com/waveshare/e-Paper) official 2in9 lib f
 
 ## Getting Started
 
+This library works with idf version 3.3 (stable version at writing time)
+
 To get started see [Espressif offical doc](https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html)
+
+
+## How connect eink display
+
+| Signal | GPIO |
+| --- | --- |
+| DIN / MOSI  | GPIO_NUM_23  |
+| CLK | GPIO_NUM_18  |
+| CS | GPIO_NUM_5   |
+| DC | GPIO_NUM_26  |
+| RST | GPIO_NUM_27  |
+| BUSY | GPIO_NUM_32  |
+
 
 ### Usage
 

@@ -76,6 +76,14 @@ extern "C" void app_main() {
   epd.SetFrameMemory(paint.GetImage(), 0, 0, paint.GetWidth(), paint.GetHeight());
 
   epd.DisplayFrame();
+
+  vTaskDelay(5000 / portTICK_RATE_MS);
+
+  paint.Clear(UNCOLORED);
+
+  epd.SetFrameMemory(IMAGE_DATA);
+
+  epd.DisplayFrame();
 }
 
 
