@@ -39,7 +39,7 @@ Epd epd;
 
 extern "C" void app_main() {
 
-  if (epd.Init(lut_partial_update) != 0) {
+  if (epd.Init(lut_full_update) != 0) {
       ESP_LOGE(kEPDTAG, "e-Paper init failed");
       vTaskDelay(2000 / portTICK_RATE_MS);
       return;
@@ -57,20 +57,45 @@ extern "C" void app_main() {
   epd.ClearFrameMemory(0xFF);   // bit set = white, bit reset = black
   epd.DisplayFrame();
 
-  paint.SetRotate(ROTATE_90);
+  paint.SetRotate(ROTATE_0);
+  paint.SetWidth(128);
+  paint.SetHeight(24);
+
+  paint.Clear(COLORED);
+  paint.DrawStringAt(0, 4, "Hello world!", &Font16, UNCOLORED);
+  epd.SetFrameMemory(paint.GetImage(), 0, 10, paint.GetWidth(), paint.GetHeight());
+
+  paint.Clear(UNCOLORED);
+  paint.DrawStringAt(0, 4, "e-Paper Demo", &Font16, COLORED);
+  epd.SetFrameMemory(paint.GetImage(), 0, 30, paint.GetWidth(), paint.GetHeight());
+
+  paint.SetWidth(64);
+  paint.SetHeight(64);
+
+  paint.Clear(UNCOLORED);
+  paint.DrawRectangle(0, 0, 40, 50, COLORED);
+  paint.DrawLine(0, 0, 40, 50, COLORED);
+  paint.DrawLine(40, 0, 0, 50, COLORED);
+  epd.SetFrameMemory(paint.GetImage(), 16, 60, paint.GetWidth(), paint.GetHeight());
+
+  paint.Clear(UNCOLORED);
+  paint.DrawFilledCircle(32, 32, 30, COLORED);
+  epd.SetFrameMemory(paint.GetImage(), 72, 130, paint.GetWidth(), paint.GetHeight());
+
+  epd.DisplayFrame();
+
+  vTaskDelay(5000 / portTICK_RATE_MS);
+
   paint.SetWidth(EPD_WIDTH);
   paint.SetHeight(EPD_HEIGHT);
+  paint.SetRotate(ROTATE_90);
 
   paint.Clear(UNCOLORED);
 
   paint.DrawStringAt(0, 0, "e-Paper Demo F24", &Font24, COLORED);
-
   paint.DrawStringAt(0, 28, "e-Paper Demo F20", &Font20, COLORED);
-
   paint.DrawStringAt(0, 50, "e-Paper Demo F16", &Font16, COLORED);
-
   paint.DrawStringAt(0, 70, "e-Paper Demo F12", &Font12, COLORED);
-
   paint.DrawStringAt(0, 90, "e-Paper Demo F8", &Font8, COLORED);
 
   epd.SetFrameMemory(paint.GetImage(), 0, 0, paint.GetWidth(), paint.GetHeight());
@@ -83,6 +108,15 @@ extern "C" void app_main() {
 
   epd.SetFrameMemory(IMAGE_DATA);
 
+  epd.DisplayFrame();
+
+  if (epd.Init(lut_partial_update) != 0) {
+	  ESP_LOGE(kEPDTAG, "e-Paper init failed");
+	  vTaskDelay(2000 / portTICK_RATE_MS);
+	  return;
+  }
+
+  epd.SetFrameMemory(IMAGE_DATA);
   epd.DisplayFrame();
 }
 
