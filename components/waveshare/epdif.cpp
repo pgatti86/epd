@@ -60,6 +60,12 @@ void EpdIf::SpiTransfer(unsigned char data) {
 
 int EpdIf::IfInit(void) {
 
+	if(spi) {
+		spi_bus_remove_device(spi);
+	}
+
+	spi_bus_free(VSPI_HOST);
+
 	gpio_config_t io_conf;
 	io_conf.intr_type = GPIO_INTR_DISABLE;
 	io_conf.mode = GPIO_MODE_OUTPUT;
@@ -81,15 +87,6 @@ int EpdIf::IfInit(void) {
 	// gpio_set_direction(BUSY_PIN, GPIO_MODE_INPUT);
 
 	esp_err_t ret;
-
-//	spi_bus_config_t buscfg;
-//	buscfg.mosi_io_num = MOSI_PIN;
-//	buscfg.sclk_io_num = CLK_PIN;
-//	buscfg.miso_io_num = -1;
-//	buscfg.quadwp_io_num = -1;
-//	buscfg.quadhd_io_num = -1;
-//	buscfg.flags = SPICOMMON_BUSFLAG_MASTER;
-//	buscfg.intr_flags = ESP_INTR_FLAG_IRAM;
 
 	spi_bus_config_t buscfg = {
 		.mosi_io_num= MOSI_PIN,
