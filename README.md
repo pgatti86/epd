@@ -4,7 +4,7 @@ Porting of [Waveshare](https://github.com/waveshare/e-Paper) official 2in9 lib f
 
 ## Getting Started
 
-This library works with idf version 3.3 (stable version at writing time)
+This library works with idf version 3.3 and 4.0 (stable version at writing time)
 
 To get started see [Espressif offical doc](https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html)
 
